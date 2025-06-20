@@ -1,3 +1,48 @@
+#include <vector>
+#include <queue>
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        queue<TreeNode*> my_queue;
+        my_queue.push(root);
+        vector<vector<int>> result;
+        while( my_queue.empty() != ture)
+        {
+            int queue_size = my_queue.size(); //每一层的节点数量
+            vector<int> temp_result;
+            for(int i = 0; i < queue_size; i++) // 用固定的size，而不是my_queue.size()，因为my_queue.size()是变化的
+            {
+                TreeNode* temp = my_queue.front();
+                vector<int> temp_result;
+                my_queue.pop();
+                temp_result.push_back(temp->val);
+                if(temp->left != NULL)
+                {
+                    my_queue.push(temp->left);
+                }
+                if(temp->right != NULL)
+                {
+                    my_queue.push(temp->right);
+                }
+            }
+            result.push_back(temp_result);
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
@@ -30,7 +75,7 @@ public:
             }
             result.push_back(temp_result);
         }
-        reverse(result.begin(), result.end());
+        reverse(result.begin(), result.end()); 
         return result;
     }
 };
