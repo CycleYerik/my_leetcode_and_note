@@ -37,9 +37,7 @@ public:
 
 
 // 迭代法中序遍历
-
-// 一次次访问，直到最底层，然后处理数据，再访问右节点，
-
+// 思路：用指针 cur 一路向左走到最底（左），弹栈时“中”处理并记录，再转向右子树（右）。栈空且 cur 为空时结束。
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
@@ -47,14 +45,14 @@ public:
         stack<TreeNode*> st;
         TreeNode* cur = root;
         while (cur != NULL || !st.empty()) {
-            if (cur != NULL) { // 指针来访问节点，访问到最底层
-                st.push(cur); // 将访问的节点放进栈
-                cur = cur->left;                // 左
+            if (cur != NULL) {           // 一路向左访问到底
+                st.push(cur);
+                cur = cur->left;         // 左
             } else {
-                cur = st.top(); // 从栈里弹出的数据，就是要处理的数据（放进result数组里的数据）
+                cur = st.top();
                 st.pop();
-                result.push_back(cur->val);     // 中
-                cur = cur->right;               // 右
+                result.push_back(cur->val);  // 中
+                cur = cur->right;            // 右
             }
         }
         return result;
