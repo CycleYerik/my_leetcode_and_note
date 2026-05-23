@@ -1,3 +1,130 @@
+#include <string>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+    public:
+    
+        // 先整个反转，然后去除空格，然后将每个单词反转
+    
+        // 纯反转
+        void my_reverse(string &s, int start, int end)
+        {
+            int left = start;
+            int right = end;
+            while(left < right)
+            {
+                swap(s[left],s[right]);
+                left++;
+                right--;
+            }
+        }
+    
+        // 去除0
+        void my_remove_zero(string &s)
+        {
+            int size = s.size();
+    
+            int slow = 0, fast = 0;
+    
+            while(fast < size)
+            {
+                // 去除前导零
+                if(s[fast] == ' ')
+                {
+                    fast++;
+                } 
+                else
+                {
+                    if(slow != 0)
+                    {
+                        s[slow] = ' ';
+                        slow++;
+                    }
+                    while(fast < size && s[fast] != ' ')
+                    {
+                        s[slow] = s[fast];
+                        slow++;
+                        fast++;
+                    }
+                }
+            }
+            s.resize(slow);
+    
+        }
+    
+        // 针对每个单词反转
+        void my_reverse_every_word(string &s)
+        {
+            int size = s.size();
+            int start = 0;
+    
+            for(int i = 0; i <= size; i++)
+            {
+                if(s[i] == ' ' || i == size)
+                {
+                    my_reverse(s,start,i-1);
+                    start = i+1;
+                }
+            }
+    
+            
+        }
+        
+        string reverseWords(string s) {
+            // 先反转整个单词
+            my_reverse(s,0,s.size()-1);
+    
+            // 去除空格
+            my_remove_zero(s);
+    
+            //针对每个单词进行反转
+            my_reverse_every_word(s);
+    
+            return s;
+        }
+    };
+
+
+
+
+
+    
+// 使用 lengthOfLastWord 的思想：从后往前遍历提取单词
+class Solution {
+    public:
+        string reverseWords(string s) {
+            string result = "";
+            int index = s.size() - 1;
+            
+            while (index >= 0) {
+                // 跳过末尾的空格
+                while (index >= 0 && s[index] == ' ') {
+                    index--;
+                }
+                
+                // 如果已经遍历完，退出
+                if (index < 0) break;
+                
+                // 找到单词的结束位置（当前index就是单词的最后一个字符）
+                int wordEnd = index;
+                
+                // 找到单词的开始位置
+                while (index >= 0 && s[index] != ' ') {
+                    index--;
+                }
+                int wordStart = index + 1;
+                
+                // 提取单词并添加到结果中
+                if (result != "") {
+                    result += " ";  // 单词之间添加空格
+                }
+                result += s.substr(wordStart, wordEnd - wordStart + 1);
+            }
+            
+            return result;
+        }
+    };
 class Solution {
 public:
     void reverse(string& s, int start, int end){ //翻转，区间写法：左闭右闭 []

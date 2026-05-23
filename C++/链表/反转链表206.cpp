@@ -28,3 +28,28 @@ public:
         return prev; // prev 是新链表的头节点
     }
 };
+
+
+
+
+
+class Solution {
+    public:
+        ListNode* reverseList(ListNode* head) {
+            if(head->next == null)
+            {
+                return head;
+            }
+            ListNode* last_node = NULL;
+            while(head -> next != NULL)
+            {
+                ListNode* temp_next = head->next;
+                head->next = last_node;
+                last_node = head;
+                head = temp_next;
+            }
+            return head;
+    
+    
+        }
+    };

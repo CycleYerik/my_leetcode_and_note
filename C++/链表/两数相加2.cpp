@@ -1,3 +1,65 @@
+
+
+class Solution {
+    public:
+        ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+            ListNode* dummy = new ListNode(0); // 虚拟头节点
+            ListNode* curr = dummy;
+            int carry = 0; // 进位
+    
+            // 只要 l1 没走完，或者 l2 没走完，或者还有进位，就继续循环
+            while (l1 != NULL || l2 != NULL || carry != 0) {
+                int sum = carry; // 先加上进位
+                
+                if (l1 != NULL) {
+                    sum += l1->val;
+                    l1 = l1->next;
+                }
+                if (l2 != NULL) {
+                    sum += l2->val;
+                    l2 = l2->next;
+                }
+    
+                carry = sum / 10; // 计算新进位
+                curr->next = new ListNode(sum % 10); // 创建新节点存放个位数
+                curr = curr->next;
+            }
+    
+            return dummy->next;
+        }
+    };
+
+class Solution {
+    public:
+        ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+            ListNode *head = nullptr, *tail = nullptr;
+            int carry = 0;
+            while (l1 || l2) {
+                int n1 = l1 ? l1->val: 0;
+                int n2 = l2 ? l2->val: 0;
+                int sum = n1 + n2 + carry;
+                if (!head) {
+                    head = tail = new ListNode(sum % 10);
+                } else {
+                    tail->next = new ListNode(sum % 10);
+                    tail = tail->next;
+                }
+                carry = sum / 10;
+                if (l1) {
+                    l1 = l1->next;
+                }
+                if (l2) {
+                    l2 = l2->next;
+                }
+            }
+            if (carry > 0) {
+                tail->next = new ListNode(carry);
+            }
+            return head;
+        }
+    };
+
+
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {

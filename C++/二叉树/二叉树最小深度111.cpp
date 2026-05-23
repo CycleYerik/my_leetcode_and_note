@@ -1,0 +1,108 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root == NULL)
+        {
+            return 0;
+        }
+        int min_depth = INT_MAX;
+        int layer = 0;
+        queue<TreeNode*> myqueue;
+        myqueue.push(root);
+        while(myqueue.empty() != 1)
+        {
+            int size = myqueue.size();
+            int is_null = 0;
+            for(int i = 0 ; i < size ; i++)
+            {
+                TreeNode* temp = myqueue.front();
+                myqueue.pop();
+                if(temp->left == NULL &&temp->right == NULL)
+                {
+                    is_null = 1;
+                }
+                if(temp->left)
+                {
+                    myqueue.push(temp->left);
+                }
+                if(temp->right)
+                {
+                    myqueue.push(temp->right);
+                }
+            }
+            layer++;
+            if(is_null == 1)
+            {
+                min_depth = min(min_depth,layer);
+            }
+        
+
+            
+
+        }
+        return min_depth;
+    }
+};
+
+
+// 官方迭代法
+class Solution {
+public:
+
+    int minDepth(TreeNode* root) {
+        if (root == NULL) return 0;
+        int depth = 0;
+        queue<TreeNode*> que;
+        que.push(root);
+        while(!que.empty()) {
+            int size = que.size();
+            depth++; // 记录最小深度
+            for (int i = 0; i < size; i++) {
+                TreeNode* node = que.front();
+                que.pop();
+                if (node->left) que.push(node->left);
+                if (node->right) que.push(node->right);
+                if (!node->left && !node->right) { // 当左右孩子都为空的时候，说明是最低点的一层了，退出
+                    return depth;
+                }
+            }
+        }
+        return depth;
+    }
+};
+
+//递归法
+class Solution {
+public:
+    int getDepth(TreeNode* node) {
+        if (node == NULL) return 0;
+        int leftDepth = getDepth(node->left);           // 左
+        int rightDepth = getDepth(node->right);         // 右
+                                                        // 中
+        // 当一个左子树为空，右不为空，这时并不是最低点
+        if (node->left == NULL && node->right != NULL) { 
+            return 1 + rightDepth;
+        }   
+        // 当一个右子树为空，左不为空，这时并不是最低点
+        if (node->left != NULL && node->right == NULL) { 
+            return 1 + leftDepth;
+        }
+        int result = 1 + min(leftDepth, rightDepth);
+        return result;
+    }
+
+    int minDepth(TreeNode* root) {
+        return getDepth(root);
+    }
+};

@@ -1,9 +1,39 @@
 class Solution {
-public:
-    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        
-    }
-};
+    public:
+        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+            unordered_set<int> result_set; // 存放结果，之所以用set是为了给结果集去重
+            unordered_set<int> nums_set(nums1.begin(), nums1.end());
+            for (int num : nums2) {
+                // 发现nums2的元素 在nums_set里又出现过
+                if (nums_set.find(num) != nums_set.end()) {
+                    result_set.insert(num);
+                }
+            }
+            return vector<int>(result_set.begin(), result_set.end());
+        }
+    };
+
+class Solution {
+    public:
+        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+            unordered_map< int,int> my_hash;
+            vector<int> result;
+            for(const auto number1 : nums1)
+            {
+                my_hash[number1]++;
+            }
+            for(const auto number2 : nums2)
+            {
+                if(my_hash[number2] >0)
+                {
+                    result.push_back(number2);
+                    my_hash[number2]--; //直接这样去重
+                }
+            }
+            
+            return result;
+        }
+    };
 
 class Solution {
 public:

@@ -1,5 +1,74 @@
 // 给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
 
+// 用两个bool储存
+class Solution {
+    public:
+        void setZeroes(vector<vector<int>>& matrix) {
+    
+            int row_size = matrix.size();
+            int col_size = matrix[0].size();
+    
+            // 先用首行首列作为记录
+    
+            int is_row_zero = 0, is_col_zero = 0;
+            for(int i = 0 ; i < row_size; i++)
+            {
+                if(matrix[i][0] == 0)
+                {
+                    is_col_zero = 1;
+                    break;
+                }
+            }
+            for(int i = 0 ; i < col_size; i++)
+            {
+                if(matrix[0][i] == 0)
+                {
+                    is_row_zero = 1;
+                    break;
+                }
+            }
+    
+            //用首行首列标记
+            for(int i = 1 ; i < row_size ; i++)
+            {
+                for(int j = 1; j < col_size; j++)
+                {
+                    if(matrix[i][j] == 0)
+                    {
+                        matrix[i][0] = 0;
+                        matrix[0][j] = 0;
+                    }
+                }
+            }
+    
+            for(int i = 1 ; i < row_size ; i++)
+            {
+                for(int j = 1; j < col_size; j++)
+                {
+                    if(matrix[i][0] == 0 || matrix[0][j] == 0)
+                    {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+            if(is_row_zero == 1)
+            {
+                for(int i = 0 ; i < col_size ; i++)
+                {
+                    matrix[0][i] = 0;
+                }
+            }
+            if(is_col_zero == 1)
+            {
+                for(int i = 0 ; i < row_size ; i++)
+                {
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+     };
+
+
 // 原始：m+n的空间复杂度
 class Solution {
 public:
