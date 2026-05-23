@@ -1,45 +1,49 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
-public:
-    int maxDepth(TreeNode* root) {
-        
-        int maxdepth = 0;
-
-        queue<TreeNode*> my_queue;
-        if(root == NULL)
-        {
-            return maxdepth;
-        }
-        my_queue.push(root);
-        while(my_queue.empty() != 1)
-        {
-            maxdepth++;
-            int size = my_queue.size();
-            for(int i = 0; i < size ; i++)
+    public:
+        int maxDepth(TreeNode* root) {
+            if(root == NULL)
             {
-                TreeNode* temp = my_queue.front();
-                my_queue.pop();
-                if(temp->left)
-                {
-                    my_queue.push(temp->left);
-                }
-                if(temp->right)
-                {
-                    my_queue.push(temp->right);
-                }
-                
+                return 0;
             }
+            int result = 0;
+    
+            queue<TreeNode*> myqueue;
+            int count = 1;
+            int new_count = 0;
+            myqueue.push(root);
+    
+            while(!myqueue.empty())
+            {
+                new_count = 0;
+                for(int i = 0 ; i < count ; i ++)
+                {
+                    TreeNode* cur = myqueue.front();
+                    myqueue.pop();
+                    if(cur->left)
+                    {
+                        myqueue.push(cur->left);
+                        new_count++;
+                    }
+                    if(cur->right)
+                    {
+                        myqueue.push(cur->right);
+                        new_count++;
+                    }
+    
+                }
+                count = new_count;
+                result++;
+            }
+            return result;
         }
-        return maxdepth;
-    }
-};
+    };
+
+
+class Solution {
+    public:
+        int maxDepth(TreeNode* root) {
+            if (root == nullptr) return 0;
+            return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+        }
+    };
+        
