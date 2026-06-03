@@ -67,7 +67,6 @@ public:
             int y_now = y + dir[i][1];
             if(x_now >= 0 && x_now < grid.size() && y_now >= 0 && y_now < grid[0].size() && grid[x_now][y_now] == '1' && visited[x_now][y_now] != 1 )
             {
-                visited[x][y] = 1;
                 dfs(grid,visited,x_now,y_now);
 
             }
