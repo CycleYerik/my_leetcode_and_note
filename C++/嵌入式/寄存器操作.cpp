@@ -242,7 +242,7 @@ bool is_little_endian() {
         char c[4];
     } u;
     u.i = 1;
-    return u.c[0] == 1;
+    return u.c[0] == 1; // 小端系统返回 true，大端系统返回 false。
 
 }
 
