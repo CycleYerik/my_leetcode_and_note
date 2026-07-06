@@ -41,3 +41,12 @@ public:
 
     }
 };
+
+int main()
+{
+    int n = 3;
+    Solution s;
+    int result = s.climbStairs(n);
+    cout << result << endl;
+    return 0;
+}

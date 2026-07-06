@@ -1,0 +1,8 @@
+{
+  "C_Cpp.default.compilerPath": "D:/mingw64/bin/g++.exe",
+  "C_Cpp.default.cppStandard": "c++17",
+  "files.associations": {
+    "*.cpp": "cpp"
+},
+"idf.currentSetup": "D:/Espressif/frameworks/esp-idf-v5.1.2/"
+}

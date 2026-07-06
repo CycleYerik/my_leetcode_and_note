@@ -55,3 +55,65 @@ class Solution {
     
         }
     };
+
+    class Solution {
+        public:
+            bool searchMatrix(vector<vector<int>>& matrix, int target) {
+                
+        
+        
+                //先进行行的二分
+                int up = 0, down = matrix.size()-1;
+                int mid = 0;
+        
+                while(up <= down)
+                {
+                    mid = up + (down - up)/2;
+                    if(matrix[mid][0] > target)
+                    {
+                        down = mid -1;
+                    }
+                    else if(matrix[mid][0] < target)
+                    {
+                        up = mid +1;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+        
+                }
+                int start = up -1;
+                if(start < 0)
+                {
+                    return false;
+                }
+        
+                int left = 0 , right = matrix[0].size()-1;
+        
+                while(left <= right)
+                {
+                    mid = left + (right - left)/2;
+                    if(matrix[start][mid] < target)
+                    {
+                        left = mid +1;
+                    }
+                    else if(matrix[start][mid] > target)
+                    {
+                        right = mid -1;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+        
+                return false;
+        
+        
+        
+        
+        
+                //再进行列的二分
+            }
+        };

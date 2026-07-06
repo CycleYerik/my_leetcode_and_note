@@ -92,3 +92,97 @@ public:
         return result;
     }
 };
+
+
+//dfs写法 26.07.06
+class Solution {
+    public:
+        int numIslands(vector<vector<char>>& grid) {
+            
+            vector<vector<bool>> is_visited(grid.size(), vector<bool>(grid[0].size() , false));
+    
+            vector<pair<int,int>> direction = {{1,0} , {-1,0} , {0,1} , {0,-1}};
+    
+            int count = 0;
+    
+            for(int i = 0; i < grid.size() ; i++)
+            {
+                for(int j = 0 ; j < grid[0].size() ; j++)
+                {
+                    if(grid[i][j] == '1' && is_visited[i][j] == false)
+                    {
+                        dfs(grid,is_visited,direction,i,j);
+                        count ++;
+                    }
+                }
+            }
+            return count;
+    
+    
+    
+        }
+    
+        void dfs(vector<vector<char>>& grid, vector<vector<bool>> &is_visited, vector<pair<int,int>> &direction, int row, int col )
+        {
+            is_visited[row][col] = true;
+            for(int i = 0 ; i < 4 ; i++)
+            {
+                auto temp = direction[i];
+                int temp_row = row + temp.first;   
+                int temp_col = col + temp.second;
+                if(temp_row >= 0 && temp_row < grid.size() && temp_col >= 0 && temp_col < grid[0].size() && grid[temp_row][temp_col] == '1' && is_visited[temp_row][temp_col] == false)
+                {
+                    dfs(grid,is_visited,direction,temp_row,temp_col);
+                }
+            }
+        }
+    };
+
+
+// 迭代 DFS 写法（stack）26.07.06
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        vector<vector<bool>> is_visited(rows, vector<bool>(cols, false));
+        vector<pair<int, int>> direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int count = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '1' && !is_visited[i][j]) {
+                    dfs_iter(grid, is_visited, direction, i, j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    void dfs_iter(vector<vector<char>>& grid,
+                  vector<vector<bool>>& is_visited,
+                  vector<pair<int, int>>& direction,
+                  int start_row,
+                  int start_col) {
+        stack<pair<int, int>> stk;
+        stk.push({start_row, start_col});
+        is_visited[start_row][start_col] = true;
+
+        while (!stk.empty()) {
+            auto [row, col] = stk.top();
+            stk.pop();
+
+            for (int i = 0; i < 4; i++) {
+                int nr = row + direction[i].first;
+                int nc = col + direction[i].second;
+                if (nr >= 0 && nr < (int)grid.size() &&
+                    nc >= 0 && nc < (int)grid[0].size() &&
+                    grid[nr][nc] == '1' && !is_visited[nr][nc]) {
+                    is_visited[nr][nc] = true;
+                    stk.push({nr, nc});
+                }
+            }
+        }
+    }
+};
