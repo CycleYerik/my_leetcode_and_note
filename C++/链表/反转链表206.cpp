@@ -10,7 +10,10 @@
  * };
  */
 
-// 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+// 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。】
+
+
+//所以其实反转链表的核心就是从head开始往后的反转，但是head的next指向了pre，但是不会直接把head->next的next直接指回head，而是在后续进行处理
 
 
 // 迭代做法
@@ -30,6 +33,19 @@ public:
 };
 
 
+//递归做法
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr) {
+            return head;
+        }
+        ListNode* last = reverseList(head->next); //相当于目前后面的这些都反转好了，返回的是最后一个节点，也就是反转后的头节点
+        head->next->next = head; // 把当前节点接在反转后的链表的末尾
+        head->next = nullptr;
+        return last;
+    }
+};
 
 
 
@@ -53,3 +69,4 @@ class Solution {
     
         }
     };
+

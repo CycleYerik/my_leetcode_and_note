@@ -38,3 +38,61 @@ public:
 
     }
 };
+
+ListNode *detectCycle(ListNode *head) {
+    ListNode *slow = head, *fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            ListNode *p = head;
+            while (p != slow) {
+                p = p->next;
+                slow = slow->next;
+            }
+            return p;
+        }
+    }
+    return nullptr;
+}
+
+class Solution {
+    public:
+        ListNode *detectCycle(ListNode *head) {
+            ListNode* node = head;
+    
+            unordered_map<ListNode*,int>map;
+    
+            while(node != nullptr)
+            {
+                if(map.find(node) != map.end())
+                {
+                    return node;
+                }
+                else
+                {
+                    map[node] = 1;
+                }
+                node = node->next;
+            }
+    
+            return NULL;
+        }
+    };
+
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        unordered_set<ListNode*> seen;
+        ListNode* node = head;
+        while(node != nullptr)
+        {
+            if(seen.find(node) != seen.end())
+            {
+    unordered_set<ListNode*> seen;  // 比 map<int> 更简洁
+    while (node) {
+        if (!seen.insert(node).second)
+            return node;
+        node = node->next;
+    }
+    return nullptr;

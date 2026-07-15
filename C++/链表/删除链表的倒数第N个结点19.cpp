@@ -94,3 +94,28 @@ public:
 
     }
 };
+
+class Solution {
+    public:
+        ListNode* removeNthFromEnd(ListNode* head, int n) {
+            ListNode* dummy = new ListNode(0);
+            ListNode* fast = dummy;
+            ListNode* slow = dummy;
+            dummy->next = head;
+    
+            while(n--)
+            {
+                fast = fast->next;
+            }
+            while(fast->next != nullptr)
+            {
+                fast = fast->next;
+                slow = slow->next;
+            }
+            ListNode* temp_next = slow->next->next;
+            ListNode* delete_node = slow->next;
+            slow->next = temp_next;
+            delete delete_node;
+            return dummy->next;
+        }
+    };
