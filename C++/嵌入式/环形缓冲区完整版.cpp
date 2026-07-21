@@ -72,4 +72,4 @@ bool rb_pop(ringbuf_t *rb, uint8_t *out_byte)
         rb->head = (rb->head + 1) % RB_CAP;
         return true;
     }
-}
+}   
